@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Cors;
 using Common;
 using Common.Contracts;
@@ -13,19 +8,21 @@ namespace Site.Controllers
 {
     [AllowAnonymous]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class LoginController : ApiController
+    [RoutePrefix("api/authorization")]
+    public class AuthorizationController : ApiController
     {
         private readonly IUserService userService;
         private readonly ITokenService tokenService;
         private readonly ICryptographyService cryptographyService;
 
-        public LoginController(IUserService userService, ITokenService tokenService, ICryptographyService cryptographyService)
+        public AuthorizationController(IUserService userService, ITokenService tokenService, ICryptographyService cryptographyService)
         {
             this.userService = userService;
             this.tokenService = tokenService;
             this.cryptographyService = cryptographyService;
         }
 
+        [Route("signin")]
         public object Post(Credentials credentials)
         {
             var user = userService.GetUserByLogin(credentials.Login);
@@ -42,6 +39,23 @@ namespace Site.Controllers
                 return response;
             }
             return "Unknown user";
+        }
+
+        [Route("signup")]
+        public object Post(RegistrationInfo registrationInfo)
+        {
+            var user = userService.GetUserByLogin(registrationInfo.Login);
+            if (user != null)
+                return "User already exists";
+            var userId = userService.CreateUser(registrationInfo);
+            var token = tokenService.CreateToken(userId, registrationInfo.Login);
+            var response = new TokenResponse
+            {
+                Id = userId,
+                Login = registrationInfo.Login,
+                Token = token,
+            };
+            return response;
         }
     }
 }

@@ -54,6 +54,7 @@
     <Compile Include="AuthenticationToken.cs" />
     <Compile Include="CommonModule.cs" />
     <Compile Include="Contracts\Credentials.cs" />
+    <Compile Include="Contracts\RegistrationInfo.cs" />
     <Compile Include="Contracts\TokenResponse.cs" />
     <Compile Include="CryptographyService.cs" />
     <Compile Include="Encryptor.cs" />
