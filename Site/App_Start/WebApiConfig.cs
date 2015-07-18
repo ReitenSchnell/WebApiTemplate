@@ -1,5 +1,6 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
+using Site.Filters;
 
 namespace Site
 {
@@ -19,6 +20,8 @@ namespace Site
 
             var serializerSettings = config.Formatters.JsonFormatter.SerializerSettings;
             serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            config.Filters.Add(new AuthenticationFilter());
         }
     }
 }
