@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Newtonsoft.Json.Serialization;
 
 namespace Site
 {
@@ -7,6 +8,7 @@ namespace Site
         public static void Register(HttpConfiguration config)
         {
             // Web API routes
+            config.EnableCors();
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
@@ -14,6 +16,9 @@ namespace Site
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            var serializerSettings = config.Formatters.JsonFormatter.SerializerSettings;
+            serializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
