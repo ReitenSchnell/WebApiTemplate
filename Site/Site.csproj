@@ -141,7 +141,6 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Filters\AuthentificationFilter.cs" />
     <Compile Include="Filters\FilterExtensions.cs" />
     <Compile Include="Filters\SitePrincipal.cs" />
