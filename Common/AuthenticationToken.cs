@@ -9,10 +9,10 @@ namespace Common
         public Guid UserId { get; private set; }
 
         [JsonProperty]
-        public string Login { get; private set; }
+        public virtual string Login { get; private set; }
 
         [JsonProperty]
-        public DateTime Expired { get; private set; }
+        public virtual DateTime Expired { get; private set; }
 
         public AuthenticationToken()
         {
@@ -25,7 +25,7 @@ namespace Common
             Expired = DateTime.UtcNow.AddMinutes(expirationPeriod);
         }
 
-        public bool IsExpired()
+        public virtual bool IsExpired()
         {
             return Expired < DateTime.UtcNow;
         }

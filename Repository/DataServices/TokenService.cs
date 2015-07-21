@@ -13,7 +13,7 @@ namespace Repository.DataServices
 
     public class TokenService : ITokenService
     {
-        private const int authenticationExpirationPeriod = 20;
+        public const int AuthenticationExpirationPeriod = 20;
         private readonly IEncryptor encryptor;
         private readonly IUserService userService;
 
@@ -25,7 +25,7 @@ namespace Repository.DataServices
 
         public string CreateToken(Guid userId, string login)
         {
-            var token = new AuthenticationToken(userId, login, authenticationExpirationPeriod);
+            var token = new AuthenticationToken(userId, login, AuthenticationExpirationPeriod);
             return encryptor.Encrypt(token);
         }
 
