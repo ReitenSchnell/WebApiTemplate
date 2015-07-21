@@ -17,11 +17,13 @@ namespace Repository.DataServices
     {
         private readonly IStorage<User> storage;
         private readonly ICryptographyService cryptographyService;
+        private readonly IIdentityGenerator identityGenerator;
 
-        public UserService(IStorage<User> storage, ICryptographyService cryptographyService)
+        public UserService(IStorage<User> storage, ICryptographyService cryptographyService, IIdentityGenerator identityGenerator)
         {
             this.storage = storage;
             this.cryptographyService = cryptographyService;
+            this.identityGenerator = identityGenerator;
         }
 
         public User GetUserByLogin(string login)
@@ -33,11 +35,11 @@ namespace Repository.DataServices
 
         public Guid CreateUser(RegistrationInfo registrationInfo)
         {
-            var passwordSalt = Guid.NewGuid();
+            var passwordSalt = identityGenerator.GetIdentity();
             var passwordHash = cryptographyService.GetPasswordHash(registrationInfo.Password, passwordSalt);
             var user = new User
             {
-                Id = Guid.NewGuid(),
+                Id = identityGenerator.GetIdentity(),
                 Login = registrationInfo.Login,
                 Name = registrationInfo.Name,
                 PasswordSalt = passwordSalt,

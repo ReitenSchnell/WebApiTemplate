@@ -58,6 +58,7 @@
     <Compile Include="Contracts\TokenResponse.cs" />
     <Compile Include="CryptographyService.cs" />
     <Compile Include="Encryptor.cs" />
+    <Compile Include="IdentityGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
