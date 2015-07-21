@@ -11,6 +11,8 @@ namespace Site.Controllers
     [RoutePrefix("api/authorization")]
     public class AuthorizationController : ApiController
     {
+        public const string UnknownUserMessage = "Unknown user";
+        public const string UserAlreadyExistsMessage = "User already exists";
         private readonly IUserService userService;
         private readonly ITokenService tokenService;
         private readonly ICryptographyService cryptographyService;
@@ -38,7 +40,7 @@ namespace Site.Controllers
                 };
                 return response;
             }
-            return "Unknown user";
+            return UnknownUserMessage;
         }
 
         [Route("signup")]
@@ -46,7 +48,7 @@ namespace Site.Controllers
         {
             var user = userService.GetUserByLogin(registrationInfo.Login);
             if (user != null)
-                return "User already exists";
+                return UserAlreadyExistsMessage;
             var userId = userService.CreateUser(registrationInfo);
             var token = tokenService.CreateToken(userId, registrationInfo.Login);
             var response = new TokenResponse
