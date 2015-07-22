@@ -10,6 +10,6 @@ namespace Repository.Models
         public string EntityType { get; set; }
         public string User { get; set; }
         public string CommandType { get; set; }
-        public string Content { get; set; }
+        public string CommandContent { get; set; }
     }
 }

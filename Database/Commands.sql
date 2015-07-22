@@ -5,5 +5,6 @@
     [EntityType] NVARCHAR(MAX) NULL, 
     [UserLogin] NVARCHAR(MAX) NULL, 
     [CommandType] NVARCHAR(MAX) NULL, 
-    [CommandContent] NVARCHAR(MAX) NULL
+    [CommandContent] NVARCHAR(MAX) NULL, 
+    [User] NVARCHAR(MAX) NULL
 )

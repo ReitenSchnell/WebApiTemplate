@@ -20,7 +20,7 @@ namespace Repository
                 Date = DateTime.Now,
                 EntityType = entity.GetType().Name,
                 User = user,
-                Content = new JavaScriptSerializer().Serialize(entity),
+                CommandContent = new JavaScriptSerializer().Serialize(entity),
                 Id = Guid.NewGuid()
             };
             return command;
