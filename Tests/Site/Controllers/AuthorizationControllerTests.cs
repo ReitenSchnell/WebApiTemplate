@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using Common;
 using Common.Contracts;
 using FluentAssertions;
@@ -31,8 +32,9 @@ namespace Tests.Site.Controllers
             userService.GetUserByLogin(credentials.Login).Returns(user);
 
             var result = controller.Post(credentials);
+            var message = result as HttpResponseMessage;
 
-            result.Should().Be(AuthorizationController.UnknownUserMessage);
+            message.ReasonPhrase.Should().Be(AuthorizationController.UnknownUserMessage);
         }
 
         [Theory, AutoData]
@@ -42,8 +44,9 @@ namespace Tests.Site.Controllers
             cryptographyService.CheckPassword(user.PasswordHash, user.PasswordSalt, credentials.Password).Returns(false);
 
             var result = controller.Post(credentials);
+            var message = result as HttpResponseMessage;
 
-            result.Should().Be(AuthorizationController.UnknownUserMessage);
+            message.ReasonPhrase.Should().Be(AuthorizationController.UnknownUserMessage);
         }
 
         [Theory, AutoData]
@@ -67,8 +70,9 @@ namespace Tests.Site.Controllers
             userService.GetUserByLogin(registrationInfo.Login).Returns(user);
 
             var result = controller.Post(registrationInfo);
+            var message = result as HttpResponseMessage;
 
-            result.Should().Be(AuthorizationController.UserAlreadyExistsMessage);
+            message.ReasonPhrase.Should().Be(AuthorizationController.UserAlreadyExistsMessage);
         }
 
         [Theory, AutoData]
