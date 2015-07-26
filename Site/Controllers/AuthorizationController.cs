@@ -1,4 +1,6 @@
-﻿using System.Web.Http;
+﻿using System.Net;
+using System.Net.Http;
+using System.Web.Http;
 using System.Web.Http.Cors;
 using Common;
 using Common.Contracts;
@@ -40,7 +42,11 @@ namespace Site.Controllers
                 };
                 return response;
             }
-            return UnknownUserMessage;
+            var message = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                ReasonPhrase = UnknownUserMessage
+            };
+            return message; 
         }
 
         [Route("signup")]
@@ -48,7 +54,10 @@ namespace Site.Controllers
         {
             var user = userService.GetUserByLogin(registrationInfo.Login);
             if (user != null)
-                return UserAlreadyExistsMessage;
+                return new HttpResponseMessage(HttpStatusCode.Conflict)
+                {
+                    ReasonPhrase = UserAlreadyExistsMessage
+                }; ;
             var userId = userService.CreateUser(registrationInfo);
             var token = tokenService.CreateToken(userId, registrationInfo.Login);
             var response = new TokenResponse
